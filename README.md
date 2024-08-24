@@ -86,8 +86,11 @@ The TFX pipeline includes the following components:
 
 The dataset consists of lung images that are collected from the hospital ,are used for training and evaluation. The data should be structured in the following format:
 
-- **Raw Images in PNG format **: Stored in a directory structure by class labels.
+- **Raw Images in PNG format**: Stored in a directory structure by class labels.
 - **Labels**: Associated with each image for supervised learning.
+
+  ![Original Data](https://github.com/user-attachments/assets/ffb9e9cf-c920-45f1-aa38-43654aaf97c1)
+
 
 ### Converting Images to TFRecord
 
