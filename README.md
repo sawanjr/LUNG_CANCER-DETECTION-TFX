@@ -1,4 +1,7 @@
 # LUNG_CANCER-DETECTION
+
+  ![Image](https://github.com/user-attachments/assets/ffb9e9cf-c920-45f1-aa38-43654aaf97c1)
+
   ## End-to-End TFX Pipeline for Lung Image Analysis
   ### NOTE
 This project demonstrates how an end-to-end solution can be built using TFX and MLOps techniques. The focus here is not solely on fine-tuning the model for optimal performance across different metrics, but rather on showcasing the application of MLOps principles and the creation of a fully operational pipeline.
@@ -84,12 +87,10 @@ The TFX pipeline includes the following components:
 
 ## Data Preparation
 
-The dataset consists of lung images that are collected from the hospital ,are used for training and evaluation. The data should be structured in the following format:
+The dataset consists of CT scanned lung images that are collected from the hospital ,are used for training and evaluation. The data should be structured in the following format:
 
 - **Raw Images in PNG format**: Stored in a directory structure by class labels.
 - **Labels**: Associated with each image for supervised learning.
-
-  ![Original Data](https://github.com/user-attachments/assets/ffb9e9cf-c920-45f1-aa38-43654aaf97c1)
 
 
 ### Converting Images to TFRecord
