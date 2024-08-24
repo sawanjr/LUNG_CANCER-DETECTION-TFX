@@ -39,6 +39,9 @@ The TFX pipeline includes the following components:
 - **Resolver**: Resolves the model and data artifacts.
 - **Pusher**: Pushes the model to the serving infrastructure.
 
+  ![image](https://github.com/user-attachments/assets/76c724c0-9d06-42ea-8439-6c14bdf62b96)
+
+
 ## Setup and Installation
 
 ### Prerequisites
