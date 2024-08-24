@@ -1,5 +1,10 @@
 # LUNG_CANCER-DETECTION
   ## End-to-End TFX Pipeline for Lung Image Analysis
+  ### NOTE
+This project demonstrates how an end-to-end solution can be built using TFX and MLOps techniques. The focus here is not solely on fine-tuning the model for optimal performance across different metrics, but rather on showcasing the application of MLOps principles and the creation of a fully operational pipeline.
+
+I have trained and tuned the model on the same dataset used throughout the pipeline, If you're interested in exploring a well-tuned version of the model with significantly better performance across various metrics, you can check the link here: [https://www.kaggle.com/code/sawanrawat/lungsdetection-fulldata].
+
 
 ## Project Overview
 
@@ -79,9 +84,9 @@ The TFX pipeline includes the following components:
 
 ## Data Preparation
 
-The dataset consists of lung images that are used for training and evaluation. The data should be structured in the following format:
+The dataset consists of lung images that are collected from the hospital ,are used for training and evaluation. The data should be structured in the following format:
 
-- **Raw Images**: Stored in a directory structure by class labels.
+- **Raw Images in PNG format **: Stored in a directory structure by class labels.
 - **Labels**: Associated with each image for supervised learning.
 
 ### Converting Images to TFRecord
@@ -102,13 +107,26 @@ Ingests the TFRecord files into the pipeline.
 
 Validates the data to ensure quality and consistency.
 
+![image](https://github.com/user-attachments/assets/b154d5f1-c1cd-4043-98de-d85218905d63)
+
+
 ### SchemaGen
 
 Generates the schema for data validation based on the dataset.
 
+![image](https://github.com/user-attachments/assets/97520d00-89b2-4ced-8b29-9cf55bcf5282)
+
+
+### StatisticsGen
+
+![image](https://github.com/user-attachments/assets/f63b95c4-521e-4220-871b-b956d2156307)
+
+
 ### ExampleTransform
 
 Transforms the raw images and labels into the format required for training.
+
+
 
 ### Trainer
 
