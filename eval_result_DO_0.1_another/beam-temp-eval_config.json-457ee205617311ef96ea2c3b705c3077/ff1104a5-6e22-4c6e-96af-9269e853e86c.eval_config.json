@@ -1,0 +1,49 @@
+{
+  "evalConfig": {
+    "modelSpecs": [
+      {
+        "signatureName": "serving_default",
+        "labelKey": "label",
+        "preprocessingFunctionNames": [
+          "transform_features"
+        ]
+      }
+    ],
+    "slicingSpecs": [
+      {}
+    ],
+    "metricsSpecs": [
+      {
+        "metrics": [
+          {
+            "className": "BinaryAccuracy"
+          },
+          {
+            "className": "Precision"
+          },
+          {
+            "className": "ExampleCount"
+          },
+          {
+            "className": "Recall"
+          },
+          {
+            "className": "AUC"
+          },
+          {
+            "className": "F1Score"
+          }
+        ],
+        "modelNames": [
+          ""
+        ]
+      }
+    ]
+  },
+  "version": "0.45.0",
+  "dataLocation": "./pipeline/Transform\\transformed_examples\\15\\Split-eval\\transformed_examples-00000-of-00001.gz",
+  "fileFormat": "tfrecords",
+  "modelLocations": {
+    "": "./pipeline/Trainer\\model\\19\\Format-Serving"
+  }
+}
