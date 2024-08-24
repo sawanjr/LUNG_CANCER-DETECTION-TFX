@@ -5,6 +5,9 @@
 
 This project demonstrates an end-to-end TFX (TensorFlow Extended) pipeline designed for processing and analyzing lung images. The pipeline integrates several components of TFX to facilitate the ingestion, transformation, training, evaluation, and serving of a machine learning model specifically tuned for lung image classification.
 
+![image](https://github.com/user-attachments/assets/7390ec54-4ef7-4d5f-8665-c86b62c3c614)
+
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
