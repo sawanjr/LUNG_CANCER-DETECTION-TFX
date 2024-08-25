@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Prediction App</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://png.pngtree.com/background/20230611/original/pngtree-man-s-lungs-on-black-background-with-smoke-coming-from-it-picture-image_3159545.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        header {
+            background-color: rgba(103, 97, 97, 0.8);
+            padding: 1px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #f5f0f0;
+            font-size: 2em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(34, 33, 33, 0.8);
+            border-radius: 10px;
+        }
+
+        .upload-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            background-color: #0984e3;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        label:hover {
+            background-color: #74b9ff;
+        }
+
+        button {
+            background-color: #00b894;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #00997a;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .gallery-item {
+            width: 200px;
+            margin: 20px;
+            text-align: center;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            background-color: rgb(210, 199, 199);
+        }
+
+        .gallery-item img {
+            max-width: 50%;
+            border-radius: 10px;
+        }
+
+        .reset-btn {
+            display: block;
+            background-color: #d63031;
+            margin: 20px auto;
+            color: white;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 16px;
+            color: #ffffff;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #222;
+            color: white;
+        }
+
+        footer a {
+            color: #00b894;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Lung Disease Prediction</h1>
+</header>
+
+<div class="container">
+    <div class="upload-section">
+        <label for="imageFile">Choose an Image</label>
+        <input type="file" id="imageFile" accept="image/*">
+        <button id="upload-btn" disabled>Upload and Predict</button>
+    </div>
+
+    <div class="gallery" id="gallery"></div>
+
+    <div class="message">Add another image or reset to clean (Max: 5 images)</div>
+    <button id="reset-btn" class="reset-btn">Reset</button>
+</div>
+
+<footer>
+    <p>&copy; 2024 Lung Disease Prediction. All Rights Reserved. | <a href="https://github.com/sawanjr/LUNG_CANCER-DETECTION-TFX" target="_blank">GitHub</a> | <a href="https://www.linkedin.com/in/sawan-kumar-bb8793243/" target="_blank">LinkedIn</a></p>
+</footer>
+
+<script>
+    const uploadBtn = document.getElementById('upload-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const gallery = document.getElementById('gallery');
+    const fileInput = document.getElementById('imageFile');
+
+    let imageCount = 0;
+    const maxImages = 5;
+
+    // Enable upload button when a file is selected
+    fileInput.addEventListener('change', function() {
+        if (fileInput.files.length > 0) {
+            uploadBtn.disabled = false;
+        }
+    });
+
+    uploadBtn.addEventListener('click', async function() {
+        const file = fileInput.files[0];
+
+        if (!file) {
+            alert('Please select an image file.');
+            return;
+        }
+
+        // Check if the maximum number of images is reached
+        if (imageCount >= maxImages) {
+            alert('You have reached the maximum limit of 5 images. Please reset to upload more.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            // Show image preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgDiv = document.createElement('div');
+                imgDiv.className = 'gallery-item';
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+
+                const predictionText = document.createElement('p');
+                predictionText.textContent = 'Predicting...'; // Placeholder text
+
+                imgDiv.appendChild(img);
+                imgDiv.appendChild(predictionText);
+                gallery.appendChild(imgDiv);
+
+                imageCount++;
+                uploadBtn.disabled = true; // Disable upload button until a new image is selected
+            }
+            reader.readAsDataURL(file);
+
+            // Make prediction (replace with your actual prediction API)
+            const response = await fetch('/predict/', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const predictionClass = data.predicted_class;
+
+                const classLabels = {
+                    0: 'Benign',
+                    1: 'Malignant'
+                };
+
+                const predictionLabel = classLabels[predictionClass] || 'Unknown';
+
+                // Update the last added gallery item's prediction
+                const lastGalleryItem = gallery.lastChild;
+                lastGalleryItem.querySelector('p').textContent = `Prediction: ${predictionLabel}`;
+            } else {
+                alert('Prediction failed. Please try again.');
+            }
+        } catch (error) {
+            alert(`Failed to upload and predict: ${error.message}`);
+        }
+    });
+
+    // Reset button to clear the gallery and reset image count
+    resetBtn.addEventListener('click', function() {
+        gallery.innerHTML = ''; // Clear all images
+        imageCount = 0; // Reset image count
+        fileInput.value = ''; // Clear file input
+        uploadBtn.disabled = true; // Disable upload button
+    });
+</script>
+
+</body>
+</html>
